@@ -24,8 +24,20 @@ def exit():
     nx.remove_controller(controller_index)
     print("Disconnected")
 
+def exitGame():
+    debug('Home - Main menu')
+    nx.press_buttons(controller_index, [nxbt.Buttons.HOME])
+    sleep(1)
+    debug('Y - Exit game menu')
+    nx.press_buttons(controller_index, [nxbt.Buttons.X])
+    sleep(1)
+    debug('A - Confirm exit')
+    nx.press_buttons(controller_index, [nxbt.Buttons.A])
+    sleep(1)
+
+
 def spamDialog(loop):
-    debug('Spamming')
+    debug('A - Spamming')
     for _ in range(loop):
         nx.press_buttons(controller_index, [nxbt.Buttons.A])
         sleep(0.5)
@@ -77,5 +89,6 @@ def goInBattle():
 
 init()
 goInBattle()
+exitGame()
 exit()
 
