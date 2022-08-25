@@ -1,34 +1,40 @@
-import cv2
+from datetime import datetime
+from imutils.video import VideoStream
+from time import sleep
 import numpy as np
-
 from keras.models import load_model
 from PIL import Image, ImageOps
+from helper import debug
 import cv2
 
+
 model = load_model('./model/keras_model.h5')
-video = cv2.VideoCapture()
-video.open("/dev/video1", cv2.CAP_DSHOW)
+vs = VideoStream(src=0).start()
+sleep(2.0)
 
 
-def saveFrame(frame, path):
-    return cv2.imwrite(path, frame)
+def isShiny():
+    debug('RIGHT - Start detection')
+    i = 0
+    while (i <= 30):
+        frame = vs.read()
+        date_time = datetime.now().strftime("%m-%d-%Y_%H-%M-%S")
+        prediction = detect(frame)
+        cv2.imwrite("./.temp/frame-" + date_time +
+                    "_" + str(i) + ".png", frame)
+        if (prediction[0][1] > prediction[0][0]):
+            return True
+        i += 1
+    return False
 
 
-def captureFrame():
-    success, frame = video.read()
-    print(frame)
-    if not success:
-        raise Exception("Cannot read")
-    return frame
-
-
-def isShiny(frame, model):
+def detect(frame):
     data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 
     # resize the image to a 224x224 with the same strategy as in TM2:
     # resizing the image to be at least 224x224 and then cropping from the center
     image_PIL = Image.fromarray(frame)
-    image = ImageOps.fit(image_PIL, (224, 224), Image.ANTIALIAS)
+    image = ImageOps.fit(image_PIL, (224, 224), Image.Resampling.LANCZOS)
 
     image_array = np.asarray(image)
     # Normalize the image
