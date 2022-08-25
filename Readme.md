@@ -18,9 +18,7 @@ python main.py
 ```
 
 ## 🎯 Todo
- - Starter selection
- - Detection of shiny pokemon
- - Screenshot on shiny + notification
+ - notification
  - Auto-Catch
  - Support multiple zone (pokemon)
  - USB mode
