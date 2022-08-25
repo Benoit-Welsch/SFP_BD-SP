@@ -1,16 +1,9 @@
 import nxbt
-import cv2
 
 from time import sleep
-from imageProcessing import captureFrame, isShiny, saveFrame
-
-cam = cv2.VideoCapture(0)
+from helper import debug
 
 nx = nxbt.Nxbt()
-
-
-def debug(message):
-    print(message)
 
 
 def initController():
@@ -30,9 +23,19 @@ def initController():
     print("GO !!!")
 
 
-def exit():
+def cleanController():
     nx.remove_controller(controller_index)
     print("Disconnected")
+
+
+def screenRecord():
+    debug('CAPTURE - screen-record')
+    nx.press_buttons(controller_index, [nxbt.Buttons.CAPTURE], 2)
+
+
+def goToHome():
+    debug('Home - Main menu')
+    nx.press_buttons(controller_index, nxbt.Buttons.HOME)
 
 
 def exitGame():
@@ -86,26 +89,12 @@ def goInBattle(pokeballNumber=0):
         nx.press_buttons(controller_index, [nxbt.Buttons.DPAD_RIGHT])
         sleep(0.5)
 
-    debug('RIGHT - Select pokemon')
+    debug('A - Select pokemon')
     nx.press_buttons(controller_index, [nxbt.Buttons.A])
     sleep(1.5)
-    debug('RIGHT - Menu selection')
+    debug('UP - Menu selection')
     nx.press_buttons(controller_index, [nxbt.Buttons.DPAD_UP])
     sleep(0.5)
-    debug('RIGHT - Confirm')
+    debug('A - Confirm')
     nx.press_buttons(controller_index, [nxbt.Buttons.A])
-    sleep(15)
-    debug('RIGHT - Start detection')
-
-    for i in range(4):
-        frame = captureFrame()
-        saveFrame(frame, "./.temp/frame" + str(i) + ".png")
-        prediction = isShiny(frame)
-        print("----------------------------------------")
-        print("n°", i)
-        print("prediction :", prediction)
-        print("sleep 0.2")
-        sleep(0.2)
-        print("----------------------------------------")
-
-    exit()
+    sleep(14.5)

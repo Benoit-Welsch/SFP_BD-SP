@@ -1,5 +1,6 @@
 from PyInquirer import prompt
-from imageProcessing import captureFrame, saveFrame
+from macro import exitGame, goToHome, screenRecord, cleanController
+from imageProcessing import isShiny
 from macro import goInBattle, initController
 
 mainQuestions = [
@@ -35,21 +36,20 @@ def main():
 
         print("Pokemon :", pokemon)
         print("Action :", action)
-
-        if (pokemon == 'Piplup'):
-            initController()
-            startRun(pokemon)
-        else:
-            print("Not supported")
+        initController()
+        startRun(pokemon)
 
 
 def startRun(pokemon):
     goInBattle(['Turtwig', 'Chimchar', 'Piplup'].index(pokemon))
-    # exitGame()
-    # startRun(pokemon)
+    if (not isShiny()):
+        exitGame()
+        startRun(pokemon)
+    else:
+        screenRecord()
+        goToHome()
+        cleanController()
 
 
 if __name__ == "__main__":
-    _, frame = captureFrame()
-    saveFrame(frame, "./.temp/frame" + str(2) + ".png")
-    # main()
+    main()
