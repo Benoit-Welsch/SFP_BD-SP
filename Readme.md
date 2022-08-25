@@ -1,6 +1,5 @@
 # Shiny Farmer Pokemon BD/SP
 
-## 🚩 Detection of shiny not implemented.
 ## 🚩 Only working for shiny starter.
 
 ## 📦 Requirement
