@@ -6,7 +6,8 @@
 ## 📦 Requirement
 - Python 3.8.10
 - Ubuntu 20.04
-- Bluetooth (apt install bluetooth)
+- Bluetooth (apt install -y bluetooth)
+- python3-opencv (apt install -y python3-opencv)
 - Capture card OR a camera (shiny auto detection)
 
 ## 🔧 How to run
@@ -20,9 +21,8 @@ python main.py
 ## 🎯 Todo
  - Starter selection
  - Detection of shiny pokemon
- - SreenShot on shiny + notification
+ - Screenshot on shiny + notification
  - Auto-Catch
  - Support multiple zone (pokemon)
  - USB mode
- - FailSafe 
-
+ - FailSafe

@@ -1,14 +1,23 @@
-from time import sleep
 import nxbt
+import cv2
+
+from time import sleep
+from imageProcessing import captureFrame, isShiny, saveFrame
+
+cam = cv2.VideoCapture(0)
 
 nx = nxbt.Nxbt()
+
 
 def debug(message):
     print(message)
 
-def init():
+
+def initController():
     global controller_index
-    controller_index = nx.create_controller(nxbt.PRO_CONTROLLER, reconnect_address=nx.get_switch_addresses())
+    controller_index = nx.create_controller(
+        nxbt.PRO_CONTROLLER,
+        reconnect_address=nx.get_switch_addresses())
     nx.wait_for_connection(controller_index)
     print("Connected")
     input("Press ENTER when you are on the game tiles !")
@@ -20,9 +29,11 @@ def init():
     sleep(1)
     print("GO !!!")
 
+
 def exit():
     nx.remove_controller(controller_index)
     print("Disconnected")
+
 
 def exitGame():
     debug('Home - Main menu')
@@ -42,7 +53,8 @@ def spamDialog(loop):
         nx.press_buttons(controller_index, [nxbt.Buttons.A])
         sleep(0.5)
 
-def goInBattle():
+
+def goInBattle(pokeballNumber=0):
     debug('A - Select Game')
     nx.press_buttons(controller_index, [nxbt.Buttons.A])
     sleep(1.5)
@@ -69,13 +81,12 @@ def goInBattle():
     nx.press_buttons(controller_index, [nxbt.Buttons.B])
     sleep(2)
 
-    debug('RIGHT - Seclect pokeball')
-    nx.press_buttons(controller_index, [nxbt.Buttons.DPAD_RIGHT])
-    sleep(0.5)
-    debug('RIGHT - Seclect pokeball')
-    nx.press_buttons(controller_index, [nxbt.Buttons.DPAD_RIGHT])
-    sleep(0.5)
-    debug('RIGHT - Seclect pokemon')
+    for _ in range(pokeballNumber):
+        debug('RIGHT - Select pokeball')
+        nx.press_buttons(controller_index, [nxbt.Buttons.DPAD_RIGHT])
+        sleep(0.5)
+
+    debug('RIGHT - Select pokemon')
     nx.press_buttons(controller_index, [nxbt.Buttons.A])
     sleep(1.5)
     debug('RIGHT - Menu selection')
@@ -83,12 +94,18 @@ def goInBattle():
     sleep(0.5)
     debug('RIGHT - Confirm')
     nx.press_buttons(controller_index, [nxbt.Buttons.A])
-    sleep(13)
+    sleep(15)
     debug('RIGHT - Start detection')
 
+    for i in range(4):
+        frame = captureFrame()
+        saveFrame(frame, "./.temp/frame" + str(i) + ".png")
+        prediction = isShiny(frame)
+        print("----------------------------------------")
+        print("n°", i)
+        print("prediction :", prediction)
+        print("sleep 0.2")
+        sleep(0.2)
+        print("----------------------------------------")
 
-init()
-goInBattle()
-exitGame()
-exit()
-
+    exit()
