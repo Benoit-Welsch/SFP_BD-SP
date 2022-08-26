@@ -97,4 +97,4 @@ def goInBattle(pokeballNumber=0):
     sleep(0.5)
     debug('A - Confirm')
     nx.press_buttons(controller_index, [nxbt.Buttons.A])
-    sleep(14.5)
+    sleep(14.6)
