@@ -33,9 +33,12 @@ def main():
 
 
 def startRun(pokemon):
+    runNumber = 0
     goInBattle(['Turtwig', 'Chimchar', 'Piplup'].index(pokemon))
     if (not isShiny()):
+        runNumber += 1
         exitGame()
+        print("Run :", str(runNumber))
         startRun(pokemon)
     else:
         screenRecord()
