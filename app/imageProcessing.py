@@ -1,34 +1,45 @@
-from ctypes import sizeof
 from datetime import datetime
-from os import mkdir
 from imutils.video import VideoStream
 from time import sleep
 import numpy as np
 from keras.models import load_model
 from PIL import Image, ImageOps
 from helper import debug, roundToString
+import cv2
+
+# Wait for cam
+vs = VideoStream(src=0).start()
+sleep(2.0)
+# Load model
 
 model = load_model('./model/keras_model.h5')
 model.compile(loss='binary_crossentropy',
               optimizer='rmsprop',
               metrics=['accuracy'])
-vs = VideoStream(src=0).start()
-sleep(2.0)
+
+# Preload model
+preloadImage = np.random.rand(224, 224, 3) * 255
+# resize image to match model's expected sizing
+preloadImage = cv2.resize(preloadImage, (224, 224))
+# return the image with shaping that TF wants.
+preloadImage = preloadImage.reshape(1, 224, 224, 3)
+model.predict(preloadImage)
 
 
 def isShiny():
     debug('KERAS - Start detection')
     frames = []
+    numberOfFrame = 60
     date_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    # Take 30 screenshot with 0.3s on sleep (30fps = 1 frame every 33ms)
-    for _ in range(30):
+    # Take 30 screenshot with 0.3s on sleep (30fps = 1 frame every 33ms -> 0.033s)
+    for _ in range(numberOfFrame):
         frame = vs.read()
         frames.append(frame)
-        sleep(0.3)
+        sleep(0.03)
 
     # Create a combine view of all images -> Tiles
-    row = 6
-    col = 5
+    col = 6
+    row = int(numberOfFrame/col)
     resolution = frames[0].shape
     tiles = Image.new("RGB", (resolution[1]*col, resolution[0]*row))
 
