@@ -12,7 +12,7 @@
 ## 🔧 How to run
 
 ```bash
-cd SFP_BD/SP
+cd SFP_BD-SP
 pip3 install .
 python main.py
 ```
