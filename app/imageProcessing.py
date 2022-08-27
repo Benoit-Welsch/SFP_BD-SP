@@ -20,9 +20,10 @@ def isShiny():
         frame = vs.read()
         date_time = datetime.now().strftime("%m-%d-%Y_%H-%M-%S")
         prediction = detect(frame)
+        print(prediction)
         cv2.imwrite("./.temp/frame-" + date_time +
                     "_" + str(i) + ".png", frame)
-        if (prediction[0][1] > prediction[0][0]):
+        if (prediction[1] > prediction[0]):
             return True
         i += 1
     return False
@@ -44,5 +45,4 @@ def detect(frame):
 
     # run the inference
     prediction = model.predict(data)
-    print(prediction)
-    return prediction
+    return [round(prediction[0][0]*100, 2), round(prediction[0][1]*100, 2)]
