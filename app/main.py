@@ -21,6 +21,8 @@ shinyQuestions = [
     }
 ]
 
+runNumber = 0
+
 
 def main():
     if (prompt(mainQuestions).get("main") == "Get shiny"):
@@ -33,7 +35,6 @@ def main():
 
 
 def startRun(pokemon):
-    runNumber = 0
     goInBattle(['Turtwig', 'Chimchar', 'Piplup'].index(pokemon))
     if (not isShiny()):
         runNumber += 1
