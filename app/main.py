@@ -18,13 +18,7 @@ shinyQuestions = [
         'name': 'start_choice',
         'message': 'Choose the starter you want to get',
         'choices': ['Turtwig', 'Chimchar', 'Piplup'],
-    },
-    {
-        'type': 'list',
-        'name': 'encountered_action',
-        'message': 'Choose what to do when encountered',
-        'choices': ['Fight and save', 'Notify me', 'Do nothing'],
-    },
+    }
 ]
 
 
@@ -32,10 +26,8 @@ def main():
     if (prompt(mainQuestions).get("main") == "Get shiny"):
         answers = prompt(shinyQuestions)
         pokemon = answers.get("start_choice")
-        action = answers.get("encountered_action")
 
         print("Pokemon :", pokemon)
-        print("Action :", action)
         initController()
         startRun(pokemon)
 
