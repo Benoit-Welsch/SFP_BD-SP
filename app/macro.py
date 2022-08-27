@@ -35,7 +35,7 @@ def screenRecord():
 
 def goToHome():
     debug('Home - Main menu')
-    nx.press_buttons(controller_index, nxbt.Buttons.HOME)
+    nx.press_buttons(controller_index, nxbt.Buttons.HOME, 1, 1)
 
 
 def exitGame():
@@ -72,7 +72,7 @@ def goInBattle(pokeballNumber=0):
     sleep(13)
     debug('UP - Move to starter zone')
     nx.press_buttons(controller_index, [nxbt.Buttons.DPAD_UP])
-    sleep(1.5)
+    sleep(2)
     debug('A - Skip dialog')
     nx.press_buttons(controller_index, [nxbt.Buttons.A])
     sleep(4)
