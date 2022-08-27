@@ -35,7 +35,7 @@ def screenRecord():
 
 def goToHome():
     debug('Home - Main menu')
-    nx.press_buttons(controller_index, nxbt.Buttons.HOME, 1, 1)
+    nx.press_buttons(controller_index, [nxbt.Buttons.HOME])
 
 
 def exitGame():
