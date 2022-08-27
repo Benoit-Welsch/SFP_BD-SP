@@ -12,9 +12,10 @@
 ## 🔧 How to run
 
 ```bash
+git clone https://github.com/Benoit-Welsch/SFP_BD-SP
 cd SFP_BD-SP
 pip3 install .
-python main.py
+python ./app/main.py
 ```
 
 ## 🎯 Todo
