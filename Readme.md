@@ -19,7 +19,6 @@ python ./app/main.py
 ```
 
 ## 🎯 Todo
- - notification
  - Auto-Catch
  - Support multiple zone (pokemon)
  - USB mode
