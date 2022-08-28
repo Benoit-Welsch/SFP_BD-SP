@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "sfp_bd-sp"
+version = "0.1.0"
+description = "Shiny Farmer Pokemon BD/SP"
+authors = ["Benoit Welsch"]
+license = "AGPL-3.0-or-later"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+imutils = "^0.5.4"
+numpy = "^1.23.2"
+keras = "^2.9.0"
+opencv-python = "^4.6.0"
+discord-webhook = "^0.17.0"
+Pillow = "^9.2.0"
+PyInquirer = "^1.0.3"
+PyYAML = "^6.0"
+nxbt = "^0.1.4"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
