@@ -23,3 +23,7 @@ python ./app/main.py
  - Support multiple zone (pokemon)
  - USB mode
  - FailSafe
+
+
+## Log
+- Piplup Shiny captured on 29/08/2022 8h40m20s [(Screenshot)](./images/frames_tiles_shiny.png.png)
