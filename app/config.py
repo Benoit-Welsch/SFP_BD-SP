@@ -1,4 +1,8 @@
+import os
 import yaml
+
+# Remove log from tensorflow
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 config = None
 

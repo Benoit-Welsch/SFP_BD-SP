@@ -1,4 +1,3 @@
-from ast import Num
 from threading import Thread
 import cv2
 
@@ -54,9 +53,6 @@ class VideoShow:
 
     def stop(self):
         self.stopped = True
-
-
-cam = VideoGet(0)
 
 
 def threadBoth(source=0):

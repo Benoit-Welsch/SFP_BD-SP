@@ -1,8 +1,6 @@
 import numpy as np
 from PIL import Image, ImageOps
-from helper import roundToString
-from keras import load_model
-import cv2
+from keras.models import load_model
 
 model = None
 
@@ -14,32 +12,32 @@ def createTileView(frames, col):
 
     for x in range(col):
         for y in range(row):
-            RBGFrame = frames[y*col + x][:, :, ::-1]
+            currentFrame = frames[y*col + x]
+            # Transform BGR in to RGB
+            RBGFrame = currentFrame[:, :, ::-1]
+            # Format transformation
             frame_PIL = Image.fromarray(RBGFrame)
+            # Add frame to image
             tiles.paste(frame_PIL, (resolution[1]*x, resolution[0]*y))
 
     return tiles
 
 
-def preLoadModel():
+def loadModel():
     global model
-    model = load_model('./model/keras_model.h5')
-    model.compile(loss='binary_crossentropy',
-                  optimizer='rmsprop',
-                  metrics=['accuracy'])
+    model = load_model('./model/keras_model.h5', compile=False)
 
-    # Preload model
-    preloadImage = np.random.rand(224, 224, 3) * 255
-    # resize image to match model's expected sizing
-    preloadImage = cv2.resize(preloadImage, (224, 224))
-    # return the image with shaping that TF wants.
-    preloadImage = preloadImage.reshape(1, 224, 224, 3)
-    preShape = np.zeros([224, 224, 3], dtype=np.uint8)
-    model.predict(preloadImage)
+    # Preload model on empty image
+    preShape = np.zeros([1, 224, 224, 3], dtype=np.uint8)
+    model.predict(preShape)
+    return model
 
 
 def isShiny(frames):
     global model
+    if (model == None):
+        loadModel()
+
     normalizedFrame = []
 
     for frame in frames:
@@ -53,8 +51,6 @@ def isShiny(frames):
     predictions = model.predict(np.array(normalizedFrame))
 
     for pred in predictions:
-        print(roundToString(pred[0]), roundToString(
-            pred[1]), roundToString(pred[2]))
         if (pred[1] > pred[0] and pred[1] > pred[2]):
             return True
-    return False
+    return False, predictions

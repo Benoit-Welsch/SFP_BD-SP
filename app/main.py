@@ -4,7 +4,7 @@ from VideoCamera import VideoGet
 from config import loadConfig
 from helper import debug
 from macro import exitGame, goToHome, screenRecord, cleanController
-from imageProcessing import createTileView, isShiny, preLoadModel
+from imageProcessing import createTileView, isShiny, loadModel
 from macro import goInBattle, initController
 import notification
 
@@ -63,7 +63,7 @@ def main():
         print("Pokemon :", pokemon)
         print("Action : ", action)
 
-        preLoadModel()
+        loadModel()
         initController()
         startRun(cam, pokemon)
 
@@ -87,7 +87,7 @@ def startRun(cam: VideoGet, pokemon):
         createTileView(frames, 6).save("./.temp/frames_" + date_time + ".png")
 
         debug('KERAS - Start detection')
-        shiny = isShiny()
+        shiny, _ = isShiny(frames)
 
         if (not shiny):
             exitGame()
