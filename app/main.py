@@ -1,7 +1,10 @@
+from datetime import datetime
 from PyInquirer import prompt
+from VideoCamera import VideoGet
 from config import loadConfig
+from helper import debug
 from macro import exitGame, goToHome, screenRecord, cleanController
-from imageProcessing import isShiny
+from imageProcessing import createTileView, isShiny, preLoadModel
 from macro import goInBattle, initController
 import notification
 
@@ -40,7 +43,10 @@ notificationQuestions = [
 
 
 def main():
-    loadConfig()
+    config = loadConfig()
+    cam = VideoGet(config['cam']['path'])
+    cam.start()
+
     q1 = prompt(mainQuestions)
 
     if (q1.get("main") == "Get shiny"):
@@ -56,24 +62,36 @@ def main():
 
         print("Pokemon :", pokemon)
         print("Action : ", action)
+
+        preLoadModel()
         initController()
-        startRun(pokemon)
+        startRun(cam, pokemon)
+
         if (notify):
             if (notificationType.get("type_notification") == "Discord"):
                 notification.discord()
 
 
-def startRun(pokemon):
+def startRun(cam: VideoGet, pokemon):
     shiny = False
     runNumber = 0
     while (not shiny):
         runNumber += 1
         print("Run :", str(runNumber))
         goInBattle(['Turtwig', 'Chimchar', 'Piplup'].index(pokemon))
+
+        frames = cam.captureFrame(60)
+
+        date_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        debug('TILES - Creation of unified view')
+        createTileView(frames, 6).save("./.temp/frames_" + date_time + ".png")
+
+        debug('KERAS - Start detection')
         shiny = isShiny()
-        if(not shiny):
+
+        if (not shiny):
             exitGame()
-       
+
     screenRecord()
     goToHome()
     cleanController()

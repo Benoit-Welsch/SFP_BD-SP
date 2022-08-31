@@ -1,3 +1,6 @@
 notification:
   discord:
-    web_hook: 
+    web_hook:
+
+cam:
+  path: 0
