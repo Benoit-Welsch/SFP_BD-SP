@@ -6,7 +6,7 @@ authors = ["Benoit Welsch"]
 license = "AGPL-3.0-or-later"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.8,<3.11"
 imutils = "^0.5.4"
 numpy = "^1.23.2"
 keras = "^2.9.0"
