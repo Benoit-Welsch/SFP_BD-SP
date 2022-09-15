@@ -52,5 +52,5 @@ def isShiny(frames):
 
     for pred in predictions:
         if (pred[1] > pred[0] and pred[1] > pred[2]):
-            return True
+            return True, predictions
     return False, predictions
