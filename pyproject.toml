@@ -16,7 +16,7 @@ Pillow = "^9.3.0"
 PyInquirer = "^1.0.3"
 PyYAML = "^6.0"
 nxbt = "^0.1.4"
-tensorflow = "^2.9.2"
+tensorflow = "^2.10.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.2"
