@@ -8,7 +8,7 @@ license = "AGPL-3.0-or-later"
 [tool.poetry.dependencies]
 python = "^3.8,<3.11"
 imutils = "^0.5.4"
-numpy = "^1.23.4"
+numpy = "^1.24.2"
 keras = "^2.9.0"
 opencv-python = "^4.6.0"
 discord-webhook = "^1.0.0"
